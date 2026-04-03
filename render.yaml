@@ -3,13 +3,16 @@ services:
     name: authentik-server
     env: docker
     plan: free
-    dockerImage: ghcr.io/goauthentik/server:latest
+    image:
+      url: ghcr.io/goauthentik/server:latest
     startCommand: server
     envVars:
       - key: AUTHENTIK_SECRET_KEY
         sync: false
       - key: AUTHENTIK_POSTGRESQL__HOST
-        value: ${postgresql.host}
+        fromDatabase:
+          name: postgresql
+          property: host
       - key: AUTHENTIK_POSTGRESQL__NAME
         value: authentik
       - key: AUTHENTIK_POSTGRESQL__USER
@@ -23,13 +26,16 @@ services:
     name: authentik-worker
     env: docker
     plan: free
-    dockerImage: ghcr.io/goauthentik/server:latest
+    image:
+      url: ghcr.io/goauthentik/server:latest
     startCommand: worker
     envVars:
       - key: AUTHENTIK_SECRET_KEY
         sync: false
       - key: AUTHENTIK_POSTGRESQL__HOST
-        value: ${postgresql.host}
+        fromDatabase:
+          name: postgresql
+          property: host
       - key: AUTHENTIK_POSTGRESQL__NAME
         value: authentik
       - key: AUTHENTIK_POSTGRESQL__USER
