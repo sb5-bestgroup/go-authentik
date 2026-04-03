@@ -5,7 +5,7 @@ services:
     plan: free
     image:
       url: ghcr.io/goauthentik/server:latest
-    dockerCommand: ["server"]
+    dockerCommand: server
     envVars:
       - key: AUTHENTIK_SECRET_KEY
         sync: false
@@ -28,7 +28,7 @@ services:
     plan: free
     image:
       url: ghcr.io/goauthentik/server:latest
-    dockerCommand: ["worker"]
+    dockerCommand: worker
     envVars:
       - key: AUTHENTIK_SECRET_KEY
         sync: false
