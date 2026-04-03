@@ -1,10 +1,9 @@
 services:
-  # 🔐 Authentik Server (expuesto)
   - type: web
     name: authentik-server
     env: docker
     plan: free
-    dockerImage: ghcr.io/goauthentik/server:2026.2.2-rc1
+    dockerImage: ghcr.io/goauthentik/server:latest
     startCommand: server
     envVars:
       - key: AUTHENTIK_SECRET_KEY
@@ -20,12 +19,11 @@ services:
           name: postgresql
           property: password
 
-  # ⚙️ Worker
   - type: worker
     name: authentik-worker
     env: docker
     plan: free
-    dockerImage: ghcr.io/goauthentik/server:2026.2.2-rc1
+    dockerImage: ghcr.io/goauthentik/server:latest
     startCommand: worker
     envVars:
       - key: AUTHENTIK_SECRET_KEY
