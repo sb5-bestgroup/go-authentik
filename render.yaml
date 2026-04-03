@@ -1,11 +1,11 @@
 services:
   - type: web
     name: authentik-server
-    env: docker
+    runtime: docker
     plan: free
     image:
       url: ghcr.io/goauthentik/server:latest
-    dockerCommand: server
+    dockerCommand: ["server"]
     envVars:
       - key: AUTHENTIK_SECRET_KEY
         sync: false
@@ -24,11 +24,11 @@ services:
 
   - type: worker
     name: authentik-worker
-    env: docker
+    runtime: docker
     plan: free
     image:
       url: ghcr.io/goauthentik/server:latest
-    dockerCommand: worker
+    dockerCommand: ["worker"]
     envVars:
       - key: AUTHENTIK_SECRET_KEY
         sync: false
@@ -47,3 +47,5 @@ services:
 
 databases:
   - name: postgresql
+    databaseName: authentik
+    user: authentik
