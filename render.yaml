@@ -47,4 +47,3 @@ services:
 
 databases:
   - name: postgresql
-    plan: free
