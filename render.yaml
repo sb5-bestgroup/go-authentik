@@ -1,0 +1,46 @@
+services:
+  # 🔐 Authentik Server (expuesto)
+  - type: web
+    name: authentik-server
+    env: docker
+    plan: free
+    dockerImage: ghcr.io/goauthentik/server:2026.2.2-rc1
+    startCommand: server
+    envVars:
+      - key: AUTHENTIK_SECRET_KEY
+        sync: false
+      - key: AUTHENTIK_POSTGRESQL__HOST
+        value: ${postgresql.host}
+      - key: AUTHENTIK_POSTGRESQL__NAME
+        value: authentik
+      - key: AUTHENTIK_POSTGRESQL__USER
+        value: authentik
+      - key: AUTHENTIK_POSTGRESQL__PASSWORD
+        fromDatabase:
+          name: postgresql
+          property: password
+
+  # ⚙️ Worker
+  - type: worker
+    name: authentik-worker
+    env: docker
+    plan: free
+    dockerImage: ghcr.io/goauthentik/server:2026.2.2-rc1
+    startCommand: worker
+    envVars:
+      - key: AUTHENTIK_SECRET_KEY
+        sync: false
+      - key: AUTHENTIK_POSTGRESQL__HOST
+        value: ${postgresql.host}
+      - key: AUTHENTIK_POSTGRESQL__NAME
+        value: authentik
+      - key: AUTHENTIK_POSTGRESQL__USER
+        value: authentik
+      - key: AUTHENTIK_POSTGRESQL__PASSWORD
+        fromDatabase:
+          name: postgresql
+          property: password
+
+databases:
+  - name: postgresql
+    plan: free
